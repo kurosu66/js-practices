@@ -1,16 +1,5 @@
-import sqlite3 from "sqlite3";
-const db = new sqlite3.Database(":memory:");
-
-function dbCreate() {
-  return new Promise((resolve) => {
-    db.run(
-      "CREATE TABLE books (id INTEGER PRIMARY KEY, title TEXT NOT NULL UNIQUE)",
-      () => {
-        resolve();
-      },
-    );
-  });
-}
+import { dbCreate, dbDrop } from "./promise_db_operation.js";
+import { db } from "./promise_db_operation.js";
 
 function dbInsert() {
   return new Promise((resolve) => {
@@ -31,13 +20,6 @@ function dbSelect() {
       console.log(`${row.id} ${row.title}`);
       resolve();
     });
-  });
-}
-
-function dbDrop() {
-  return new Promise((resolve) => {
-    db.run("DROP TABLE IF EXISTS books");
-    resolve();
   });
 }
 

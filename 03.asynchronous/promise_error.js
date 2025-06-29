@@ -1,18 +1,7 @@
-import sqlite3 from "sqlite3";
-const db = new sqlite3.Database(":memory:");
+import { dbCreate, dbDrop } from "./promise_db_operation.js";
+import { db } from "./promise_db_operation.js";
 
-function dbCreate() {
-  return new Promise((resolve) => {
-    db.run(
-      "CREATE TABLE books (id INTEGER PRIMARY KEY, title TEXT NOT NULL UNIQUE)",
-      () => {
-        resolve();
-      },
-    );
-  });
-}
-
-function dbInsert() {
+function dbInsert_with_error() {
   return new Promise((resolve, reject) => {
     db.run(
       "INSERT INTO bookss (title) VALUES (?)",
@@ -28,7 +17,7 @@ function dbInsert() {
   });
 }
 
-function dbSelect() {
+function dbSelect_with_error() {
   return new Promise((resolve, reject) => {
     db.get("SELECT id, title FROM bookss", (err) => {
       if (err) {
@@ -40,24 +29,17 @@ function dbSelect() {
   });
 }
 
-function dbDrop() {
-  return new Promise((resolve) => {
-    db.run("DROP TABLE IF EXISTS books");
-    resolve();
-  });
-}
-
-function promise_error() {
+function promise_with_error() {
   dbCreate()
-    .then(() => dbInsert())
+    .then(() => dbInsert_with_error())
     .catch((err) => {
       console.log(err.message);
     })
-    .then(() => dbSelect())
+    .then(() => dbSelect_with_error())
     .catch((err) => {
       console.log(err.message);
     })
     .then(() => dbDrop());
 }
 
-promise_error();
+promise_with_error();
