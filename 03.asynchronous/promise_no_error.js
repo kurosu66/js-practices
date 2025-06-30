@@ -1,5 +1,5 @@
-import { dbCreate, dbDrop } from "./promise_db_operation.js";
-import { db } from "./promise_db_operation.js";
+import { dbCreate, dbDrop } from "./db_operation.js";
+import { db } from "./db_operation.js";
 
 function dbInsert() {
   return new Promise((resolve) => {
