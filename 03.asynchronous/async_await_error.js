@@ -19,7 +19,7 @@ function dbInsert_with_error() {
 
 function dbSelect_with_error() {
   return new Promise((resolve, reject) => {
-    db.get("SELECT id, title FROM bookss", (err) => {
+    db.get("SELECT idd, title FROM books", (err) => {
       if (err) {
         reject(err);
       } else {
