@@ -12,7 +12,7 @@ db.run(
         console.log(this.lastID);
         db.get("SELECT id, title FROM books", (err, row) => {
           console.log(`${row.id} ${row.title}`);
-          db.run("DROP TABLE IF EXISTS books");
+          db.run("DROP TABLE books");
         });
       },
     );

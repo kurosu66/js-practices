@@ -15,7 +15,7 @@ export function dbCreate() {
 
 export function dbDrop() {
   return new Promise((resolve) => {
-    db.run("DROP TABLE IF EXISTS books");
+    db.run("DROP TABLE books");
     resolve();
   });
 }
