@@ -10,11 +10,11 @@ db.run(
       ["アーサー王物語"],
       function (err) {
         if (err) {
-          console.log(`${err.message}`);
+          console.error(err.message);
         }
         db.get("SELECT idd, title FROM books", (err) => {
           if (err) {
-            console.log(`${err.message}`);
+            console.error(err.message);
           }
           db.run("DROP TABLE IF EXISTS books");
         });

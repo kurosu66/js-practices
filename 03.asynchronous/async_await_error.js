@@ -34,12 +34,12 @@ async function async_with_error() {
   try {
     await dbInsert_with_error();
   } catch (err) {
-    console.log(err.message);
+    console.error(err.message);
   }
   try {
     await dbSelect_with_error();
   } catch (err) {
-    console.log(err.message);
+    console.error(err.message);
   }
   await dbDrop();
 }

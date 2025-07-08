@@ -33,11 +33,11 @@ function promise_with_error() {
   dbCreate()
     .then(() => dbInsert_with_error())
     .catch((err) => {
-      console.log(err.message);
+      console.error(err.message);
     })
     .then(() => dbSelect_with_error())
     .catch((err) => {
-      console.log(err.message);
+      console.error(err.message);
     })
     .then(() => dbDrop());
 }
