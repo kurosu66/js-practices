@@ -1,7 +1,6 @@
-import { dbCreate, dbDrop } from "./db_operation.js";
-import { db } from "./db_operation.js";
+import { db, dbCreate, dbDrop } from "./db_operation.js";
 
-function dbInsert() {
+function dbInsert(db) {
   return new Promise((resolve) => {
     db.run(
       "INSERT INTO books (title) VALUES (?)",
@@ -14,7 +13,7 @@ function dbInsert() {
   });
 }
 
-function dbSelect() {
+function dbSelect(db) {
   return new Promise((resolve) => {
     db.get("SELECT id, title FROM books", (err, row) => {
       console.log(`${row.id} ${row.title}`);
@@ -24,10 +23,10 @@ function dbSelect() {
 }
 
 function promise_no_error() {
-  dbCreate()
-    .then(() => dbInsert())
-    .then(() => dbSelect())
-    .then(() => dbDrop());
+  dbCreate(db)
+    .then(() => dbInsert(db))
+    .then(() => dbSelect(db))
+    .then(() => dbDrop(db));
 }
 
 promise_no_error();

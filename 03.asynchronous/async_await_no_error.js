@@ -1,7 +1,6 @@
-import { dbCreate, dbDrop } from "./db_operation.js";
-import { db } from "./db_operation.js";
+import { db, dbCreate, dbDrop } from "./db_operation.js";
 
-function dbInsert() {
+function dbInsert(db) {
   return new Promise((resolve, reject) => {
     db.run(
       "INSERT INTO books (title) VALUES (?)",
@@ -18,7 +17,7 @@ function dbInsert() {
   });
 }
 
-function dbSelect() {
+function dbSelect(db) {
   return new Promise((resolve, reject) => {
     db.get("SELECT id, title FROM books", (err, row) => {
       if (err) {
@@ -32,10 +31,10 @@ function dbSelect() {
 }
 
 async function async_no_error() {
-  await dbCreate();
-  await dbInsert();
-  await dbSelect();
-  await dbDrop();
+  await dbCreate(db);
+  await dbInsert(db);
+  await dbSelect(db);
+  await dbDrop(db);
 }
 
 async_no_error();

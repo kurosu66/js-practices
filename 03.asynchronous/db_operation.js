@@ -1,8 +1,7 @@
 import sqlite3 from "sqlite3";
-
 export const db = new sqlite3.Database(":memory:");
 
-export function dbCreate() {
+export function dbCreate(db) {
   return new Promise((resolve) => {
     db.run(
       "CREATE TABLE books (id INTEGER PRIMARY KEY, title TEXT NOT NULL UNIQUE)",
@@ -13,7 +12,7 @@ export function dbCreate() {
   });
 }
 
-export function dbDrop() {
+export function dbDrop(db) {
   return new Promise((resolve) => {
     db.run("DROP TABLE books");
     resolve();

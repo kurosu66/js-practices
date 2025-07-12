@@ -1,7 +1,6 @@
-import { dbCreate, dbDrop } from "./db_operation.js";
-import { db } from "./db_operation.js";
+import { db, dbCreate, dbDrop } from "./db_operation.js";
 
-function dbInsert_with_error() {
+function dbInsert_with_error(db) {
   return new Promise((resolve, reject) => {
     db.run(
       "INSERT INTO bookss (title) VALUES (?)",
@@ -17,7 +16,7 @@ function dbInsert_with_error() {
   });
 }
 
-function dbSelect_with_error() {
+function dbSelect_with_error(db) {
   return new Promise((resolve, reject) => {
     db.get("SELECT idd, title FROM books", (err) => {
       if (err) {
@@ -30,16 +29,16 @@ function dbSelect_with_error() {
 }
 
 function promise_with_error() {
-  dbCreate()
-    .then(() => dbInsert_with_error())
+  dbCreate(db)
+    .then(() => dbInsert_with_error(db))
     .catch((err) => {
       console.error(err.message);
     })
-    .then(() => dbSelect_with_error())
+    .then(() => dbSelect_with_error(db))
     .catch((err) => {
       console.error(err.message);
     })
-    .then(() => dbDrop());
+    .then(() => dbDrop(db));
 }
 
 promise_with_error();
