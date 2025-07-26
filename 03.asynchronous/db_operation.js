@@ -1,20 +1,26 @@
 import sqlite3 from "sqlite3";
 export const db = new sqlite3.Database(":memory:");
 
-export function dbCreate(db) {
-  return new Promise((resolve) => {
-    db.run(
-      "CREATE TABLE books (id INTEGER PRIMARY KEY, title TEXT NOT NULL UNIQUE)",
-      () => {
-        resolve();
-      },
-    );
+export function runQuery(query, params) {
+  return new Promise((resolve, reject) => {
+    db.run(query, params, function (err) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(this);
+      }
+    });
   });
 }
 
-export function dbDrop(db) {
-  return new Promise((resolve) => {
-    db.run("DROP TABLE books");
-    resolve();
+export function getQuery(query) {
+  return new Promise((resolve, reject) => {
+    db.get(query, (err, row) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(row);
+      }
+    });
   });
 }

@@ -1,40 +1,16 @@
-import { db, dbCreate, dbDrop } from "./db_operation.js";
-
-function dbInsert(db) {
-  return new Promise((resolve, reject) => {
-    db.run(
-      "INSERT INTO books (title) VALUES (?)",
-      ["アーサー王物語"],
-      function (err) {
-        if (err) {
-          reject(err);
-        } else {
-          console.log(`ID:${this.lastID}`);
-          resolve();
-        }
-      },
-    );
-  });
-}
-
-function dbSelect(db) {
-  return new Promise((resolve, reject) => {
-    db.get("SELECT id, title FROM books", (err, row) => {
-      if (err) {
-        reject(err);
-      } else {
-        console.log(`${row.id} ${row.title}`);
-        resolve();
-      }
-    });
-  });
-}
+import { getQuery, runQuery } from "./db_operation.js";
 
 async function async_no_error() {
-  await dbCreate(db);
-  await dbInsert(db);
-  await dbSelect(db);
-  await dbDrop(db);
+  await runQuery(
+    "CREATE TABLE books (id INTEGER PRIMARY KEY, title TEXT NOT NULL UNIQUE)",
+  );
+  const insertMsg = await runQuery("INSERT INTO books (title) VALUES (?)", [
+    "アーサー王物語",
+  ]);
+  console.log(insertMsg.lastID);
+  const getMsg = await getQuery("SELECT id, title FROM books");
+  console.log(`${getMsg.id} ${getMsg.title}`);
+  await runQuery("DROP TABLE books");
 }
 
 async_no_error();

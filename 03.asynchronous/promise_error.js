@@ -1,44 +1,21 @@
-import { db, dbCreate, dbDrop } from "./db_operation.js";
-
-function dbInsert_with_error(db) {
-  return new Promise((resolve, reject) => {
-    db.run(
-      "INSERT INTO bookss (title) VALUES (?)",
-      ["アーサー王物語"],
-      (err) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve();
-        }
-      },
-    );
-  });
-}
-
-function dbSelect_with_error(db) {
-  return new Promise((resolve, reject) => {
-    db.get("SELECT idd, title FROM books", (err) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve();
-      }
-    });
-  });
-}
+import { runQuery, getQuery } from "./db_operation.js";
 
 function promise_with_error() {
-  dbCreate(db)
-    .then(() => dbInsert_with_error(db))
-    .catch((err) => {
-      console.error(err.message);
-    })
-    .then(() => dbSelect_with_error(db))
-    .catch((err) => {
-      console.error(err.message);
-    })
-    .then(() => dbDrop(db));
+  runQuery(
+    "CREATE TABLE books (id INTEGER PRIMARY KEY, title TEXT NOT NULL UNIQUE)",
+  ).then(() =>
+    runQuery("INSERT INTO bookss (title) VALUES (?)", ["アーサー王物語"])
+      .catch((err) => {
+        console.error(err.message);
+      })
+      .then(() =>
+        getQuery("SELECT idd, title FROM books")
+          .catch((err) => {
+            console.error(err.message);
+          })
+          .then(() => runQuery("DROP TABLE books")),
+      ),
+  );
 }
 
 promise_with_error();
