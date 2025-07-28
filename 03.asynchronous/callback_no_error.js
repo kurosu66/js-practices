@@ -10,7 +10,7 @@ db.run(
       ["アーサー王物語"],
       function () {
         console.log(this.lastID);
-        db.get("SELECT id, title FROM books", (err, row) => {
+        db.get("SELECT id, title FROM books", (_err, row) => {
           console.log(`${row.id} ${row.title}`);
           db.run("DROP TABLE books");
         });
