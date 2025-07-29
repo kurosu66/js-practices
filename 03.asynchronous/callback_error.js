@@ -1,6 +1,4 @@
-import sqlite3 from "sqlite3";
-
-const db = new sqlite3.Database(":memory:");
+import { db } from "./db_operation.js";
 
 db.run(
   "CREATE TABLE books (id INTEGER PRIMARY KEY, title TEXT NOT NULL UNIQUE)",
