@@ -1,6 +1,6 @@
 import { db, executeRunQuery, executeGetQuery } from "./db_operation.js";
 
-function promise_with_error() {
+function promiseWithError() {
   executeRunQuery(
     db,
     "CREATE TABLE books (id INTEGER PRIMARY KEY, title TEXT NOT NULL UNIQUE)",
@@ -21,4 +21,4 @@ function promise_with_error() {
   );
 }
 
-promise_with_error();
+promiseWithError();

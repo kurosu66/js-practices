@@ -1,6 +1,6 @@
 import { db, executeRunQuery, executeGetQuery } from "./db_operation.js";
 
-async function async_with_error() {
+async function asyncWithError() {
   await executeRunQuery(
     db,
     "CREATE TABLE books (id INTEGER PRIMARY KEY, title TEXT NOT NULL UNIQUE)",
@@ -21,4 +21,4 @@ async function async_with_error() {
   await executeRunQuery(db, "DROP TABLE books");
 }
 
-async_with_error();
+asyncWithError();
