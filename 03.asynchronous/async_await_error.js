@@ -9,12 +9,20 @@ try {
     "アーサー王物語",
   ]);
 } catch (err) {
-  console.error(err.message);
+  if (err.code === "SQLITE_ERROR") {
+    console.error(err.message);
+  } else {
+    throw err;
+  }
 }
 
 try {
   await executeGetQuery(db, "SELECT idd, title FROM books");
 } catch (err) {
-  console.error(err.message);
+  if (err.code === "SQLITE_ERROR") {
+    console.error(err.message);
+  } else {
+    throw err;
+  }
 }
 await executeRunQuery(db, "DROP TABLE books");
