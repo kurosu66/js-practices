@@ -2,7 +2,7 @@ import sqlite3 from "sqlite3";
 
 export const db = new sqlite3.Database(":memory:");
 
-export function executeRunQuery(db, query, params) {
+export function executeSqliteRun(db, query, params) {
   return new Promise((resolve, reject) => {
     db.run(query, params, function (err) {
       if (err) {
@@ -14,7 +14,7 @@ export function executeRunQuery(db, query, params) {
   });
 }
 
-export function executeGetQuery(db, query) {
+export function executeSqliteGet(db, query) {
   return new Promise((resolve, reject) => {
     db.get(query, (err, row) => {
       if (err) {

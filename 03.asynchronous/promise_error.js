@@ -1,11 +1,11 @@
-import { db, executeRunQuery, executeGetQuery } from "./db_operation.js";
+import { db, executeSqliteRun, executeSqliteGet } from "./db_operation.js";
 
-executeRunQuery(
+executeSqliteRun(
   db,
   "CREATE TABLE books (id INTEGER PRIMARY KEY, title TEXT NOT NULL UNIQUE)",
 )
   .then(() =>
-    executeRunQuery(db, "INSERT INTO bookss (title) VALUES (?)", [
+    executeSqliteRun(db, "INSERT INTO bookss (title) VALUES (?)", [
       "アーサー王物語",
     ]),
   )
@@ -13,11 +13,11 @@ executeRunQuery(
     console.error(err.message);
   })
   .then(() => {
-    return executeGetQuery(db, "SELECT idd, title FROM books");
+    return executeSqliteGet(db, "SELECT idd, title FROM books");
   })
   .catch((err) => {
     console.error(err.message);
   })
   .then(() => {
-    return executeRunQuery(db, "DROP TABLE books");
+    return executeSqliteRun(db, "DROP TABLE books");
   });

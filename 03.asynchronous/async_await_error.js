@@ -1,11 +1,11 @@
-import { db, executeRunQuery, executeGetQuery } from "./db_operation.js";
+import { db, executeSqliteRun, executeSqliteGet } from "./db_operation.js";
 
-await executeRunQuery(
+await executeSqliteRun(
   db,
   "CREATE TABLE books (id INTEGER PRIMARY KEY, title TEXT NOT NULL UNIQUE)",
 );
 try {
-  await executeRunQuery(db, "INSERT INTO bookss (title) VALUES (?)", [
+  await executeSqliteRun(db, "INSERT INTO bookss (title) VALUES (?)", [
     "アーサー王物語",
   ]);
 } catch (err) {
@@ -16,7 +16,7 @@ try {
   }
 }
 try {
-  await executeGetQuery(db, "SELECT idd, title FROM books");
+  await executeSqliteGet(db, "SELECT idd, title FROM books");
 } catch (err) {
   if (err.code === "SQLITE_ERROR") {
     console.error(err.message);
@@ -24,4 +24,4 @@ try {
     throw err;
   }
 }
-await executeRunQuery(db, "DROP TABLE books");
+await executeSqliteRun(db, "DROP TABLE books");
