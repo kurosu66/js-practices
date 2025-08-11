@@ -15,7 +15,6 @@ try {
     throw err;
   }
 }
-
 try {
   await executeGetQuery(db, "SELECT idd, title FROM books");
 } catch (err) {
