@@ -10,7 +10,7 @@ db.run(
         if (err) {
           console.error(err.message);
         }
-        db.get("SELECT idd, title FROM books", (err) => {
+        db.get("SELECT idd, title FROM books where id = ?", [1], (err) => {
           if (err) {
             console.error(err.message);
           }

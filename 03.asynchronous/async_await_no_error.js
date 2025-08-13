@@ -10,6 +10,10 @@ const result = await executeSqliteRun(
   ["アーサー王物語"],
 );
 console.log(result.lastID);
-const row = await executeSqliteGet(db, "SELECT id, title FROM books");
+const row = await executeSqliteGet(
+  db,
+  "SELECT id, title FROM books where id = ?",
+  [1],
+);
 console.log(`${row.id} ${row.title}`);
 await executeSqliteRun(db, "DROP TABLE books");

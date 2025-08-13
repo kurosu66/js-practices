@@ -11,7 +11,9 @@ executeSqliteRun(
   )
   .then((result) => {
     console.log(result.lastID);
-    return executeSqliteGet(db, "SELECT id, title FROM books");
+    return executeSqliteGet(db, "SELECT id, title FROM books where id = ?", [
+      1,
+    ]);
   })
   .then((row) => {
     console.log(`${row.id} ${row.title}`);

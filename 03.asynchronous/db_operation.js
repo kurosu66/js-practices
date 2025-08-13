@@ -14,9 +14,9 @@ export function executeSqliteRun(db, query, params) {
   });
 }
 
-export function executeSqliteGet(db, query) {
+export function executeSqliteGet(db, query, params) {
   return new Promise((resolve, reject) => {
-    db.get(query, (err, row) => {
+    db.get(query, params, (err, row) => {
       if (err) {
         reject(err);
       } else {

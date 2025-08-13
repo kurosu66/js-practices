@@ -16,7 +16,7 @@ try {
   }
 }
 try {
-  await executeSqliteGet(db, "SELECT idd, title FROM books");
+  await executeSqliteGet(db, "SELECT idd, title FROM books where id = ?", [1]);
 } catch (err) {
   if (err.code === "SQLITE_ERROR") {
     console.error(err.message);
