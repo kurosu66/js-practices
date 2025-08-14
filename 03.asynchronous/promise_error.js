@@ -11,12 +11,9 @@ executeSqliteRun(
   )
   .catch((err) => {
     console.error(err.message);
-  })
-  .then(() => {
-    return executeSqliteGet(db, "SELECT idd, title FROM books where id = ?", [
-      1,
-    ]);
-  })
+  });
+
+executeSqliteGet(db, "SELECT idd, title FROM books where id = ?", [1])
   .catch((err) => {
     console.error(err.message);
   })
