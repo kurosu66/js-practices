@@ -9,7 +9,7 @@ try {
     "アーサー王物語",
   ]);
 } catch (err) {
-  if (err.code === "SQLITE_ERROR") {
+  if (err instanceof Error && err.code === "SQLITE_ERROR") {
     console.error(err.message);
   } else {
     throw err;
@@ -18,7 +18,7 @@ try {
 try {
   await executeSqliteGet(db, "SELECT idd, title FROM books where id = ?", [1]);
 } catch (err) {
-  if (err.code === "SQLITE_ERROR") {
+  if (err instanceof Error && err.code === "SQLITE_ERROR") {
     console.error(err.message);
   } else {
     throw err;
