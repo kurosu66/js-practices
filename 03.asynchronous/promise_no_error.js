@@ -17,5 +17,5 @@ executeSqliteRun(
   })
   .then((row) => {
     console.log(`${row.id} ${row.title}`);
-    return executeSqliteRun(db, "DROP TABLE books");
+    executeSqliteRun(db, "DROP TABLE books");
   });

@@ -4,19 +4,28 @@ executeSqliteRun(
   db,
   "CREATE TABLE books (id INTEGER PRIMARY KEY, title TEXT NOT NULL UNIQUE)",
 )
-  .then(() =>
-    executeSqliteRun(db, "INSERT INTO bookss (title) VALUES (?)", [
+  .then(() => {
+    return executeSqliteRun(db, "INSERT INTO bookss (title) VALUES (?)", [
       "アーサー王物語",
-    ]),
-  )
+    ]);
+  })
   .catch((err) => {
-    console.error(err.message);
-  });
-
-executeSqliteGet(db, "SELECT idd, title FROM books where id = ?", [1])
+    if (err instanceof Error && err.code === "SQLITE_ERROR") {
+      console.error(err.message);
+    } else {
+      throw err;
+    }
+    return executeSqliteGet(db, "SELECT idd, title FROM books where id = ?", [
+      1,
+    ]);
+  })
   .catch((err) => {
-    console.error(err.message);
+    if (err instanceof Error && err.code === "SQLITE_ERROR") {
+      console.error(err.message);
+    } else {
+      throw err;
+    }
   })
   .then(() => {
-    return executeSqliteRun(db, "DROP TABLE books");
+    executeSqliteRun(db, "DROP TABLE books");
   });
