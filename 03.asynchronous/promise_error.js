@@ -27,5 +27,5 @@ executeSqliteRun(
     }
   })
   .then(() => {
-    executeSqliteRun(db, "DROP TABLE books");
+    return executeSqliteRun(db, "DROP TABLE books");
   });
