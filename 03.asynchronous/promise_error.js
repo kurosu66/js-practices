@@ -4,11 +4,11 @@ executeSqliteRun(
   db,
   "CREATE TABLE books (id INTEGER PRIMARY KEY, title TEXT NOT NULL UNIQUE)",
 )
-  .then(() => {
-    return executeSqliteRun(db, "INSERT INTO bookss (title) VALUES (?)", [
+  .then(() =>
+    executeSqliteRun(db, "INSERT INTO bookss (title) VALUES (?)", [
       "アーサー王物語",
-    ]);
-  })
+    ]),
+  )
   .catch((err) => {
     if (err instanceof Error && err.code === "SQLITE_ERROR") {
       console.error(err.message);
@@ -26,6 +26,4 @@ executeSqliteRun(
       throw err;
     }
   })
-  .then(() => {
-    return executeSqliteRun(db, "DROP TABLE books");
-  });
+  .then(() => executeSqliteRun(db, "DROP TABLE books"));
