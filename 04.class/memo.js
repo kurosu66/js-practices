@@ -16,7 +16,7 @@ function main() {
   } else if (args.r) {
     memo.detail();
   } else if (args.d) {
-    memo.deleteMemo();
+    memo.delete();
   } else if (process.argv.length <= 2) {
     console.log(process.argv);
     db.run(

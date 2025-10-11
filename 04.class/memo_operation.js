@@ -37,7 +37,7 @@ class MemoOperation {
     });
   }
 
-  deleteMemo() {
+  delete() {
     db.all("SELECT * FROM memos", async (_err, rows) => {
       const choices = rows.map((row) => ({
         name: String(row.id),
