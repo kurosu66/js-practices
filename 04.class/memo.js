@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import minimist from "minimist";
 import fs from "fs";
 import sqlite3 from "sqlite3";
