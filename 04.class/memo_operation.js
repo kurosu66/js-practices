@@ -4,7 +4,7 @@ import sqlite3 from "sqlite3";
 const db = new sqlite3.Database("./memo.db");
 const { Select } = enquirer;
 
-class MemoOperation {
+export default class MemoOperation {
   post(input) {
     db.run("INSERT INTO memos (memo) VALUES (?)", [input]);
   }
@@ -56,5 +56,3 @@ class MemoOperation {
     });
   }
 }
-
-export default MemoOperation;
