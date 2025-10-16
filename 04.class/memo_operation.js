@@ -17,42 +17,49 @@ export default class MemoOperation {
     });
   }
 
-  detail() {
-    db.all("SELECT * FROM memos", async (_err, rows) => {
-      const choices = rows.map((row) => ({
-        name: String(row.id),
-        message: row.memo.split("\n")[0],
-        value: row.id,
-      }));
-
-      const prompt = new Select({
-        name: "select",
-        message: "Choose a note you want to see:",
-        choices: choices,
-      });
-
-      const selectedId = await prompt.run();
-      const selectedMemo = rows.find((row) => row.id === Number(selectedId));
-      console.log(selectedMemo.memo);
+  async detail() {
+    const choices = this.#getMemoChoices();
+    const prompt = new Select({
+      name: "select",
+      message: "Choose a note you want to see:",
+      choices: choices,
     });
+
+    const selectedId = await prompt.run();
+    const selectedMemo = await new Promise((resolve) => {
+      db.get(
+        "SELECT memo from memos WHERE id = ?",
+        [selectedId],
+        (_err, row) => {
+          resolve(row.memo);
+        },
+      );
+    });
+    console.log(selectedMemo);
   }
 
-  delete() {
-    db.all("SELECT * FROM memos", async (_err, rows) => {
-      const choices = rows.map((row) => ({
-        name: String(row.id),
-        message: row.memo.split("\n")[0],
-        value: row.id,
-      }));
+  async delete() {
+    const choices = this.#getMemoChoices();
+    const prompt = new Select({
+      name: "select",
+      message: "Choose a note you want to delete:",
+      choices: choices,
+    });
 
-      const prompt = new Select({
-        name: "select",
-        message: "Choose a note you want to delete:",
-        choices: choices,
+    const selectedId = await prompt.run();
+    db.run("DELETE FROM memos WHERE id = ?", [selectedId]);
+  }
+
+  #getMemoChoices() {
+    return new Promise((resolve) => {
+      db.all("SELECT * FROM memos", (_err, rows) => {
+        const choices = rows.map((row) => ({
+          name: String(row.id),
+          message: row.memo.split("\n")[0],
+          value: row.id,
+        }));
+        resolve(choices);
       });
-
-      const selectedId = await prompt.run();
-      db.run("DELETE FROM memos WHERE id = ?", [selectedId]);
     });
   }
 }
