@@ -7,9 +7,20 @@ import MemoOperation from "./memo_operation.js";
 
 const db = new sqlite3.Database("./memo.db");
 
-function main() {
+async function initializeDatabase() {
+  return new Promise((resolve) => {
+    db.run(
+      "CREATE TABLE IF NOT EXISTS memos (id INTEGER PRIMARY KEY, memo TEXT NOT NULL)",
+      () => resolve(),
+    );
+  });
+}
+
+async function main() {
   const args = minimist(process.argv.slice(2));
-  const memo = new MemoOperation();
+  const memo = new MemoOperation(db);
+
+  await initializeDatabase();
 
   if (args.l) {
     memo.index();
@@ -18,10 +29,6 @@ function main() {
   } else if (args.d) {
     memo.delete();
   } else if (process.argv.length <= 2) {
-    console.log(process.argv);
-    db.run(
-      "CREATE TABLE IF NOT EXISTS memos (id INTEGER PRIMARY KEY, memo TEXT NOT NULL)",
-    );
     const input = fs.readFileSync(0, "utf8").trim();
     memo.post(input);
   } else {
