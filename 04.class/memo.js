@@ -2,28 +2,19 @@
 
 import minimist from "minimist";
 import fs from "fs";
-import sqlite3 from "sqlite3";
+import Database from "./database.js";
 import MemoOperation from "./memo_operation.js";
 
-const db = new sqlite3.Database("./memo.db");
-
-async function initializeDatabase() {
-  return new Promise((resolve) => {
-    db.run(
-      "CREATE TABLE IF NOT EXISTS memos (id INTEGER PRIMARY KEY, memo TEXT NOT NULL)",
-      () => resolve(),
-    );
-  });
-}
+const db = new Database("./memo.db");
 
 async function main() {
   const args = minimist(process.argv.slice(2));
+  await db.initializeDatabase();
+
   const memo = new MemoOperation(db);
 
-  await initializeDatabase();
-
   if (args.l) {
-    memo.index();
+    await memo.index();
   } else if (args.r) {
     memo.detail();
   } else if (args.d) {

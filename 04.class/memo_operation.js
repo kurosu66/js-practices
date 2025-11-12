@@ -1,4 +1,5 @@
 import enquirer from "enquirer";
+
 const { Select } = enquirer;
 
 export default class MemoOperation {
@@ -10,11 +11,10 @@ export default class MemoOperation {
     this.db.run("INSERT INTO memos (memo) VALUES (?)", [input]);
   }
 
-  index() {
-    this.db.all("SELECT * FROM memos", (_err, rows) => {
-      rows.forEach((row) => {
-        console.log(row.memo.split("\n")[0]);
-      });
+  async index() {
+    const rows = await this.db.index();
+    rows.forEach((row) => {
+      console.log(row.memo.split("\n")[0]);
     });
   }
 
