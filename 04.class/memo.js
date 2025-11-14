@@ -14,14 +14,14 @@ async function main() {
   const memo = new MemoOperation(db);
 
   if (args.l) {
-    await memo.index();
+    await memo.add();
   } else if (args.r) {
-    memo.detail();
+    memo.show();
   } else if (args.d) {
     memo.delete();
   } else if (process.argv.length <= 2) {
     const input = fs.readFileSync(0, "utf8").trim();
-    memo.post(input);
+    memo.add(input);
   } else {
     console.log("有効なオプションを指定してください");
   }

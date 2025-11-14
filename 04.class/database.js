@@ -11,7 +11,7 @@ export default class Database {
     );
   }
 
-  index() {
+  getAllMemos() {
     return new Promise((resolve, reject) => {
       this.db.all("SELECT * FROM memos", (err, rows) => {
         if (err) return reject(err);

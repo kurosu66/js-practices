@@ -7,18 +7,18 @@ export default class MemoOperation {
     this.db = db;
   }
 
-  post(input) {
+  add(input) {
     this.db.run("INSERT INTO memos (memo) VALUES (?)", [input]);
   }
 
-  async index() {
-    const rows = await this.db.index();
+  async list() {
+    const rows = await this.db.getAllMemos();
     rows.forEach((row) => {
       console.log(row.memo.split("\n")[0]);
     });
   }
 
-  async detail() {
+  async show() {
     const choices = this.#getMemoChoices();
     const prompt = new Select({
       name: "select",
