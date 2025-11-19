@@ -19,7 +19,7 @@ export default class MemoOperation {
   }
 
   async show() {
-    const choices = this.#getMemoChoices();
+    const choices = await this.#getMemoChoices();
     const prompt = new Select({
       name: "select",
       message: "Choose a note you want to see:",
