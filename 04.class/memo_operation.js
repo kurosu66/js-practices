@@ -27,11 +27,12 @@ export default class MemoOperation {
     });
 
     const selectedId = await prompt.run();
-    const selectedMemo = await new Promise((resolve) => {
+    const selectedMemo = await new Promise((resolve, reject) => {
       this.db.get(
         "SELECT memo from memos WHERE id = ?",
         [selectedId],
-        (_err, row) => {
+        (err, row) => {
+          if (err) return reject(err);
           resolve(row.memo);
         },
       );
@@ -52,8 +53,9 @@ export default class MemoOperation {
   }
 
   #getMemoChoices() {
-    return new Promise((resolve) => {
-      this.db.all("SELECT * FROM memos", (_err, rows) => {
+    return new Promise((resolve, reject) => {
+      this.db.all("SELECT * FROM memos", (err, rows) => {
+        if (err) return reject(err);
         const choices = rows.map((row) => ({
           name: String(row.id),
           message: row.memo.split("\n")[0],
