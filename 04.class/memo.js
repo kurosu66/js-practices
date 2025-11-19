@@ -14,7 +14,7 @@ async function main() {
   const memo = new MemoOperation(db);
 
   if (args.l) {
-    await memo.add();
+    await memo.list();
   } else if (args.r) {
     memo.show();
   } else if (args.d) {
