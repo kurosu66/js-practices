@@ -12,18 +12,20 @@ async function main() {
   await db.initializeDatabase();
 
   const memo = new MemoOperation(db);
+  const noArgument = process.argv.length <= 2;
+  const invalidArgument = !args.l && !args.r && !args.d && !noArgument;
 
-  if (args.l) {
+  if (invalidArgument) {
+    console.log("有効なオプションを指定してください");
+  } else if (args.l) {
     await memo.list();
   } else if (args.r) {
     memo.show();
   } else if (args.d) {
     memo.delete();
-  } else if (process.argv.length <= 2) {
+  } else if (noArgument) {
     const input = fs.readFileSync(0, "utf8").trim();
     memo.add(input);
-  } else {
-    console.log("有効なオプションを指定してください");
   }
 }
 
