@@ -7,6 +7,10 @@ import MemoOperation from "./memo_operation.js";
 
 const db = new Database("./memo.db");
 
+function readInput() {
+  return fs.readFileSync(0, "utf8").trim();
+}
+
 async function main() {
   const args = minimist(process.argv.slice(2));
   await db.initializeDatabase();
@@ -17,6 +21,7 @@ async function main() {
 
   if (invalidArgument) {
     console.log("有効なオプションを指定してください");
+    process.exitCode = 1;
   } else if (args.l) {
     await memo.list();
   } else if (args.r) {
@@ -24,7 +29,7 @@ async function main() {
   } else if (args.d) {
     memo.delete();
   } else if (noArgument) {
-    const input = fs.readFileSync(0, "utf8").trim();
+    const input = await readInput();
     memo.add(input);
   }
 }
