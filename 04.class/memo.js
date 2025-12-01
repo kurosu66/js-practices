@@ -20,7 +20,7 @@ async function main() {
   const invalidArgument = !args.l && !args.r && !args.d && !noArgument;
 
   if (invalidArgument) {
-    console.log("有効なオプションを指定してください");
+    console.error("有効なオプションを指定してください");
     process.exitCode = 1;
   } else if (args.l) {
     await memo.list();
