@@ -1,14 +1,25 @@
 #!/usr/bin/env node
 
+import readline from "readline";
 import minimist from "minimist";
-import fs from "fs";
 import Database from "./database.js";
 import MemoOperation from "./memo_operation.js";
 
 const db = new Database("./memo.db");
 
 function readInput() {
-  return fs.readFileSync(0, "utf8").trim();
+  const rl = readline.createInterface(process.stdin);
+  const inputContents = [];
+
+  return new Promise((resolve) => {
+    rl.on("line", (line) => {
+      inputContents.push(line);
+    });
+
+    rl.on("close", () => {
+      resolve(inputContents.join("\n").trim());
+    });
+  });
 }
 
 async function main() {
