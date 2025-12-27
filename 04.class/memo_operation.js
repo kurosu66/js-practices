@@ -1,7 +1,5 @@
 import enquirer from "enquirer";
 
-const { Select } = enquirer;
-
 export default class MemoOperation {
   constructor(db) {
     this.db = db;
@@ -20,7 +18,7 @@ export default class MemoOperation {
 
   async show() {
     const choices = await this.#getMemoChoices();
-    const prompt = new Select({
+    const prompt = enquirer.select({
       name: "select",
       message: "Choose a note you want to see:",
       choices: choices,
@@ -42,7 +40,7 @@ export default class MemoOperation {
 
   async delete() {
     const choices = this.#getMemoChoices();
-    const prompt = new Select({
+    const prompt = enquirer.select({
       name: "select",
       message: "Choose a note you want to delete:",
       choices: choices,
