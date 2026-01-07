@@ -28,4 +28,17 @@ export default class Database {
       });
     });
   }
+
+  getMemo(selectedId) {
+    return new Promise((resolve, reject) => {
+      this.db.get(
+        "SELECT * FROM memos WHERE id = ?",
+        [selectedId],
+        (err, row) => {
+          if (err) return reject(err);
+          resolve(row.memo);
+        },
+      );
+    });
+  }
 }

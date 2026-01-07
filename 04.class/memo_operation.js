@@ -18,31 +18,22 @@ export default class MemoOperation {
 
   async show() {
     const choices = await this.#getMemoChoices();
-    const prompt = enquirer.select({
+    const prompt = new enquirer.Select({
       name: "select",
-      message: "Choose a note you want to see:",
+      message: "Choose a memo you want to see:",
       choices: choices,
     });
 
     const selectedId = await prompt.run();
-    const selectedMemo = await new Promise((resolve, reject) => {
-      this.db.get(
-        "SELECT memo from memos WHERE id = ?",
-        [selectedId],
-        (err, row) => {
-          if (err) return reject(err);
-          resolve(row.memo);
-        },
-      );
-    });
+    const selectedMemo = await this.db.getMemo(selectedId);
     console.log(selectedMemo);
   }
 
   async delete() {
-    const choices = this.#getMemoChoices();
-    const prompt = enquirer.select({
+    const choices = await this.#getMemoChoices();
+    const prompt = new enquirer.Select({
       name: "select",
-      message: "Choose a note you want to delete:",
+      message: "Choose a memo you want to delete:",
       choices: choices,
     });
 
@@ -50,17 +41,13 @@ export default class MemoOperation {
     this.db.run("DELETE FROM memos WHERE id = ?", [selectedId]);
   }
 
-  #getMemoChoices() {
-    return new Promise((resolve, reject) => {
-      this.db.all("SELECT * FROM memos", (err, rows) => {
-        if (err) return reject(err);
-        const choices = rows.map((row) => ({
-          name: String(row.id),
-          message: row.memo.split("\n")[0],
-          value: row.id,
-        }));
-        resolve(choices);
-      });
-    });
+  async #getMemoChoices() {
+    const rows = await this.db.getAllMemos();
+    const choices = rows.map((row) => ({
+      name: String(row.id),
+      message: row.memo.split("\n")[0],
+      value: row.id,
+    }));
+    return choices;
   }
 }
