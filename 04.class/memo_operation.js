@@ -1,16 +1,18 @@
 import enquirer from "enquirer";
 
 export default class MemoOperation {
+  #db;
+
   constructor(db) {
-    this.db = db;
+    this.#db = db;
   }
 
   add(input) {
-    this.db.run("INSERT INTO memos (memo) VALUES (?)", [input]);
+    this.#db.run("INSERT INTO memos (memo) VALUES (?)", [input]);
   }
 
   async list() {
-    const rows = await this.db.getAllMemos();
+    const rows = await this.#db.getAllMemos();
     rows.forEach((row) => {
       console.log(row.memo.split("\n")[0]);
     });
@@ -25,7 +27,7 @@ export default class MemoOperation {
     });
 
     const selectedId = await prompt.run();
-    const selectedMemo = await this.db.getMemo(selectedId);
+    const selectedMemo = await this.#db.getMemo(selectedId);
     console.log(selectedMemo);
   }
 
@@ -38,11 +40,11 @@ export default class MemoOperation {
     });
 
     const selectedId = await prompt.run();
-    this.db.run("DELETE FROM memos WHERE id = ?", [selectedId]);
+    this.#db.run("DELETE FROM memos WHERE id = ?", [selectedId]);
   }
 
   async #getMemoChoices() {
-    const rows = await this.db.getAllMemos();
+    const rows = await this.#db.getAllMemos();
     const choices = rows.map((row) => ({
       name: String(row.id),
       message: row.memo.split("\n")[0],
