@@ -11,6 +11,10 @@ export default class Database {
     );
   }
 
+  addMemo(input) {
+    this.db.run("INSERT INTO memos (memo) VALUES (?)", [input]);
+  }
+
   getAllMemos() {
     return new Promise((resolve, reject) => {
       this.db.all("SELECT * FROM memos", (err, rows) => {

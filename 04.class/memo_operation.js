@@ -7,8 +7,8 @@ export default class MemoOperation {
     this.#db = db;
   }
 
-  add(input) {
-    this.#db.run("INSERT INTO memos (memo) VALUES (?)", [input]);
+  async add(input) {
+    await this.#db.addMemo(input);
   }
 
   async list() {
