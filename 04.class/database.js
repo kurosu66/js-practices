@@ -17,9 +17,9 @@ export default class Database {
 
   getAllMemos() {
     return new Promise((resolve, reject) => {
-      this.db.all("SELECT * FROM memos", (err, rows) => {
+      this.db.all("SELECT * FROM memos ORDER BY id ASC", (err, memo) => {
         if (err) return reject(err);
-        resolve(rows);
+        resolve(memo);
       });
     });
   }
