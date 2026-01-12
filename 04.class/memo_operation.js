@@ -12,9 +12,9 @@ export default class MemoOperation {
   }
 
   async list() {
-    const rows = await this.#db.getAllMemos();
-    rows.forEach((row) => {
-      console.log(row.memo.split("\n")[0]);
+    const allMemos = await this.#db.getAllMemos();
+    allMemos.forEach((memo) => {
+      console.log(memo.content.split("\n")[0]);
     });
   }
 
@@ -44,11 +44,11 @@ export default class MemoOperation {
   }
 
   async #getMemoChoices() {
-    const rows = await this.#db.getAllMemos();
-    const choices = rows.map((row) => ({
-      name: String(row.id),
-      message: row.memo.split("\n")[0],
-      value: row.id,
+    const getAllMemos = await this.#db.getAllMemos();
+    const choices = getAllMemos.map((memo) => ({
+      name: String(memo.id),
+      message: memo.content.split("\n")[0],
+      value: memo.id,
     }));
     return choices;
   }

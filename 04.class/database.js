@@ -7,12 +7,12 @@ export default class Database {
 
   async initializeDatabase() {
     return this.run(
-      "CREATE TABLE IF NOT EXISTS memos (id INTEGER PRIMARY KEY, memo TEXT NOT NULL)",
+      "CREATE TABLE IF NOT EXISTS memos (id INTEGER PRIMARY KEY, content TEXT NOT NULL)",
     );
   }
 
   addMemo(input) {
-    this.db.run("INSERT INTO memos (memo) VALUES (?)", [input]);
+    this.db.run("INSERT INTO memos (content) VALUES (?)", [input]);
   }
 
   getAllMemos() {
@@ -38,9 +38,9 @@ export default class Database {
       this.db.get(
         "SELECT * FROM memos WHERE id = ?",
         [selectedId],
-        (err, row) => {
+        (err, memo) => {
           if (err) return reject(err);
-          resolve(row.memo);
+          resolve(memo.content);
         },
       );
     });
