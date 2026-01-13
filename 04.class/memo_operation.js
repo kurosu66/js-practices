@@ -23,7 +23,7 @@ export default class MemoOperation {
     const prompt = new enquirer.Select({
       name: "select",
       message: "Choose a memo you want to see:",
-      choices: choices,
+      choices,
     });
 
     const selectedId = await prompt.run();
@@ -36,7 +36,7 @@ export default class MemoOperation {
     const prompt = new enquirer.Select({
       name: "select",
       message: "Choose a memo you want to delete:",
-      choices: choices,
+      choices,
     });
 
     const selectedId = await prompt.run();
