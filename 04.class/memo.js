@@ -30,18 +30,28 @@ async function main() {
   const noArgument = process.argv.length <= 2;
   const invalidArgument = !args.l && !args.r && !args.d && !noArgument;
 
-  if (invalidArgument) {
-    console.error("有効なオプションを指定してください");
-    process.exitCode = 1;
-  } else if (args.l) {
-    await memo.list();
-  } else if (args.r) {
-    memo.show();
-  } else if (args.d) {
-    memo.delete();
-  } else if (noArgument) {
-    const input = await readInput();
-    memo.add(input);
+  try {
+    if (invalidArgument) {
+      console.error("Please specify a valid option.");
+      process.exitCode = 1;
+    } else if (args.l) {
+      await memo.list();
+    } else if (args.r) {
+      await memo.show();
+    } else if (args.d) {
+      await memo.delete();
+    } else if (noArgument) {
+      const input = await readInput();
+      await memo.add(input);
+    }
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error(`Processing has been interrupted.: ${error.message}`);
+      process.exitCode = 1;
+    } else {
+      console.error("Operation has been interrupted.");
+      process.exitCode = 1;
+    }
   }
 }
 
