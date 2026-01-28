@@ -5,8 +5,6 @@ import minimist from "minimist";
 import Database from "./database.js";
 import MemoOperation from "./memo_operation.js";
 
-const db = new Database("./memo.db");
-
 function readInput() {
   const rl = readline.createInterface(process.stdin);
   const inputContents = [];
@@ -23,6 +21,7 @@ function readInput() {
 }
 
 async function main() {
+  const db = new Database("./memo.db");
   const args = minimist(process.argv.slice(2));
   await db.initializeDatabase();
 
