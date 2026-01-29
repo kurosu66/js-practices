@@ -25,7 +25,7 @@ async function main() {
   const args = minimist(process.argv.slice(2));
   await db.initializeDatabase();
 
-  const memo = new MemoOperation(db);
+  const memoOperator = new MemoOperation(db);
   const noArgument = process.argv.length <= 2;
   const invalidArgument = !args.l && !args.r && !args.d && !noArgument;
 
@@ -34,14 +34,14 @@ async function main() {
       console.error("Please specify a valid option.");
       process.exitCode = 1;
     } else if (args.l) {
-      await memo.list();
+      await memoOperator.list();
     } else if (args.r) {
-      await memo.show();
+      await memoOperator.show();
     } else if (args.d) {
-      await memo.delete();
+      await memoOperator.delete();
     } else if (noArgument) {
       const input = await readInput();
-      await memo.add(input);
+      await memoOperator.add(input);
     }
   } catch (error) {
     if (error instanceof Error) {
