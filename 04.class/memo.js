@@ -26,8 +26,8 @@ async function main() {
   await db.initializeDatabase();
 
   const memoOperator = new MemoOperation(db);
-  const noArgument = process.argv.length <= 2;
-  const invalidArgument = !args.l && !args.r && !args.d && !noArgument;
+  const hasNoArguments = process.argv.length <= 2;
+  const invalidArgument = !(args.l || args.r || args.d || hasNoArguments);
 
   try {
     if (invalidArgument) {
@@ -39,7 +39,7 @@ async function main() {
       await memoOperator.show();
     } else if (args.d) {
       await memoOperator.delete();
-    } else if (noArgument) {
+    } else if (hasNoArguments) {
       const input = await readInput();
       await memoOperator.add(input);
     }
