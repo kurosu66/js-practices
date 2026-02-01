@@ -33,6 +33,7 @@ async function main() {
     if (invalidArgument) {
       console.error("Please specify a valid option.");
       process.exitCode = 1;
+      return;
     } else if (args.l) {
       await memoOperator.list();
     } else if (args.r) {
