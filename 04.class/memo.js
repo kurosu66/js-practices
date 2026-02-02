@@ -40,7 +40,7 @@ async function main() {
       await memoOperator.show();
     } else if (args.d) {
       await memoOperator.delete();
-    } else if (hasNoArguments) {
+    } else {
       const input = await readInput();
       await memoOperator.add(input);
     }
