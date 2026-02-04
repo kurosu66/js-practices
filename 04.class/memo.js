@@ -45,12 +45,11 @@ async function main() {
       await memoOperator.add(input);
     }
   } catch (error) {
-    if (error instanceof Error) {
-      console.error(`Processing has been interrupted.: ${error.message}`);
-      process.exitCode = 1;
+    // enquirerのユーザー側のキャンセル（Ctrl+C）を想定
+    if (error === "") {
+      process.exitCode = 0;
     } else {
-      console.error("Operation has been interrupted.");
-      process.exitCode = 1;
+      throw error;
     }
   }
 }
