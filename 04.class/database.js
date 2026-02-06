@@ -45,4 +45,8 @@ export default class Database {
       );
     });
   }
+
+  deleteMemo(selectedId) {
+    this.db.run("DELETE FROM memos WHERE id = ?", [selectedId]);
+  }
 }

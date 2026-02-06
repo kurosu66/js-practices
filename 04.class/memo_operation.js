@@ -40,7 +40,7 @@ export default class MemoOperation {
     });
 
     const selectedId = await prompt.run();
-    this.#db.run("DELETE FROM memos WHERE id = ?", [selectedId]);
+    await this.#db.deleteMemo(selectedId);
   }
 
   async #getMemoChoices() {
