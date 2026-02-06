@@ -7,15 +7,14 @@ import MemoOperation from "./memo_operation.js";
 
 function readInput() {
   const rl = readline.createInterface(process.stdin);
-  const inputContents = [];
+  const lines = [];
 
   return new Promise((resolve) => {
     rl.on("line", (line) => {
-      inputContents.push(line);
+      lines.push(line);
     });
-
     rl.on("close", () => {
-      resolve(inputContents.join("\n").trim());
+      resolve(lines.join("\n"));
     });
   });
 }
