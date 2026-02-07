@@ -44,8 +44,8 @@ export default class MemoOperation {
   }
 
   async #getMemoChoices() {
-    const getAllMemos = await this.#db.getAllMemos();
-    const choices = getAllMemos.map((memo) => ({
+    const allMemos = await this.#db.getAllMemos();
+    const choices = allMemos.map((memo) => ({
       name: String(memo.id),
       message: memo.content.split("\n")[0],
       value: memo.id,
