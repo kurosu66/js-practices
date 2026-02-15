@@ -19,20 +19,31 @@ export default class MemoOperation {
   }
 
   async show() {
-    const choices = await this.#getMemoChoices();
+    const allMemos = await this.#db.getAllMemos();
+    const choices = allMemos.map((memo) => {
+      const firstLine = memo.content.split("\n")[0];
+      return {
+        name: firstLine,
+        value: memo.id,
+      };
+    });
     const prompt = new enquirer.Select({
       name: "select",
       message: "Choose a memo you want to see:",
       choices,
+      result(name) {
+        const choice = this.choices.find((choice) => choice.name === name);
+        return choice.value;
+      },
     });
 
     const selectedId = await prompt.run();
-    const selectedMemo = await this.#db.getMemo(selectedId);
-    console.log(selectedMemo);
+    const selectedMemo = allMemos.find((memo) => memo.id === selectedId);
+    console.log(selectedMemo.content);
   }
 
   async delete() {
-    const choices = await this.#getMemoChoices();
+    // const choices = await this.#getMemoChoices();
     const prompt = new enquirer.Select({
       name: "select",
       message: "Choose a memo you want to delete:",
@@ -41,15 +52,5 @@ export default class MemoOperation {
 
     const selectedId = await prompt.run();
     await this.#db.deleteMemo(selectedId);
-  }
-
-  async #getMemoChoices() {
-    const allMemos = await this.#db.getAllMemos();
-    const choices = allMemos.map((memo) => ({
-      name: String(memo.id),
-      message: memo.content.split("\n")[0],
-      value: memo.id,
-    }));
-    return choices;
   }
 }
