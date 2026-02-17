@@ -28,7 +28,6 @@ export default class MemoOperation {
       };
     });
     const prompt = new enquirer.Select({
-      name: "select",
       message: "Choose a memo you want to see:",
       choices,
       result(name) {
@@ -43,11 +42,22 @@ export default class MemoOperation {
   }
 
   async delete() {
-    // const choices = await this.#getMemoChoices();
+    const allMemos = await this.#db.getAllMemos();
+    const choices = await allMemos.map((memo) => {
+      const firstLine = memo.content.split("\n")[0];
+      return {
+        name: firstLine,
+        value: memo.id,
+      };
+    });
+
     const prompt = new enquirer.Select({
-      name: "select",
       message: "Choose a memo you want to delete:",
       choices,
+      result(name) {
+        const choice = this.choices.find((choice) => choice.name === name);
+        return choice.value;
+      },
     });
 
     const selectedId = await prompt.run();
