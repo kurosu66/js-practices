@@ -2,7 +2,7 @@
 
 import readline from "readline";
 import minimist from "minimist";
-import Database from "./database.js";
+import MemoDatabase from "./memo_database.js";
 import MemoOperation from "./memo_operation.js";
 
 function readInput() {
@@ -20,7 +20,7 @@ function readInput() {
 }
 
 async function main() {
-  const db = new Database("./memo.db");
+  const db = new MemoDatabase("./memo.db");
   const args = minimist(process.argv.slice(2));
   await db.initializeDatabase();
 
