@@ -12,7 +12,7 @@ export default class MemoDatabase {
   }
 
   addMemo(input) {
-    this.db.run("INSERT INTO memos (content) VALUES (?)", [input]);
+    this.run("INSERT INTO memos (content) VALUES (?)", [input]);
   }
 
   getAllMemos() {
