@@ -15,24 +15,6 @@ export default class MemoDatabase {
     this.run("INSERT INTO memos (content) VALUES (?)", [input]);
   }
 
-  getAllMemos() {
-    return new Promise((resolve, reject) => {
-      this.db.all("SELECT * FROM memos ORDER BY id ASC", (err, memo) => {
-        if (err) return reject(err);
-        resolve(memo);
-      });
-    });
-  }
-
-  run(sql, params = []) {
-    return new Promise((resolve, reject) => {
-      this.db.run(sql, params, function (err) {
-        if (err) return reject(err);
-        resolve(this);
-      });
-    });
-  }
-
   getMemo(selectedId) {
     return new Promise((resolve, reject) => {
       this.db.get(
@@ -48,5 +30,23 @@ export default class MemoDatabase {
 
   deleteMemo(selectedId) {
     this.db.run("DELETE FROM memos WHERE id = ?", [selectedId]);
+  }
+
+  run(sql, params = []) {
+    return new Promise((resolve, reject) => {
+      this.db.run(sql, params, function (err) {
+        if (err) return reject(err);
+        resolve(this);
+      });
+    });
+  }
+
+  all() {
+    return new Promise((resolve, reject) => {
+      this.db.all("SELECT * FROM memos ORDER BY id ASC", (err, memos) => {
+        if (err) return reject(err);
+        resolve(memos);
+      });
+    });
   }
 }

@@ -12,14 +12,14 @@ export default class MemoOperation {
   }
 
   async list() {
-    const allMemos = await this.#db.getAllMemos();
+    const allMemos = await this.#db.all();
     allMemos.forEach((memo) => {
       console.log(memo.content.split("\n")[0]);
     });
   }
 
   async show() {
-    const allMemos = await this.#db.getAllMemos();
+    const allMemos = await this.#db.all();
     const choices = allMemos.map((memo) => {
       const firstLine = memo.content.split("\n")[0];
       return {
@@ -42,7 +42,7 @@ export default class MemoOperation {
   }
 
   async delete() {
-    const allMemos = await this.#db.getAllMemos();
+    const allMemos = await this.#db.all();
     const choices = await allMemos.map((memo) => {
       const firstLine = memo.content.split("\n")[0];
       return {
