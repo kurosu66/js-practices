@@ -15,16 +15,12 @@ export default class MemoDatabase {
     this.run("INSERT INTO memos (content) VALUES (?)", [input]);
   }
 
-  getMemo(selectedId) {
+  getMemo(memoId) {
     return new Promise((resolve, reject) => {
-      this.db.get(
-        "SELECT * FROM memos WHERE id = ?",
-        [selectedId],
-        (err, memo) => {
-          if (err) return reject(err);
-          resolve(memo.content);
-        },
-      );
+      this.db.get("SELECT * FROM memos WHERE id = ?", [memoId], (err, memo) => {
+        if (err) return reject(err);
+        resolve(memo.content);
+      });
     });
   }
 
