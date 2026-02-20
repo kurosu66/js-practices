@@ -32,11 +32,14 @@ export default class MemoDatabase {
     this.db.run("DELETE FROM memos WHERE id = ?", [selectedId]);
   }
 
-  run(sql, params = []) {
+  run(sql, params) {
     return new Promise((resolve, reject) => {
       this.db.run(sql, params, function (err) {
-        if (err) return reject(err);
-        resolve(this);
+        if (err) {
+          reject(err);
+        } else {
+          resolve(this);
+        }
       });
     });
   }
@@ -44,8 +47,11 @@ export default class MemoDatabase {
   all() {
     return new Promise((resolve, reject) => {
       this.db.all("SELECT * FROM memos ORDER BY id ASC", (err, memos) => {
-        if (err) return reject(err);
-        resolve(memos);
+        if (err) {
+          reject(err);
+        } else {
+          resolve(memos);
+        }
       });
     });
   }
