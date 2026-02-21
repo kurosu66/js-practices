@@ -15,15 +15,6 @@ export default class MemoDatabase {
     this.run("INSERT INTO memos (content) VALUES (?)", [input]);
   }
 
-  getMemo(memoId) {
-    return new Promise((resolve, reject) => {
-      this.db.get("SELECT * FROM memos WHERE id = ?", [memoId], (err, memo) => {
-        if (err) return reject(err);
-        resolve(memo.content);
-      });
-    });
-  }
-
   deleteMemo(selectedId) {
     this.db.run("DELETE FROM memos WHERE id = ?", [selectedId]);
   }
