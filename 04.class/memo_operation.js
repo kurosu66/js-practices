@@ -7,6 +7,16 @@ export default class MemoOperation {
     this.#db = db;
   }
 
+  #createChoices(memos) {
+    return memos.map((memo) => {
+      const firstLine = memo.content.split("\n")[0];
+      return {
+        name: firstLine,
+        value: memo.id,
+      };
+    });
+  }
+
   async add(input) {
     await this.#db.addMemo(input);
   }
@@ -20,13 +30,7 @@ export default class MemoOperation {
 
   async show() {
     const allMemos = await this.#db.all();
-    const choices = allMemos.map((memo) => {
-      const firstLine = memo.content.split("\n")[0];
-      return {
-        name: firstLine,
-        value: memo.id,
-      };
-    });
+    const choices = this.#createChoices(allMemos);
     const prompt = new enquirer.Select({
       message: "Choose a memo you want to see:",
       choices,
@@ -43,13 +47,7 @@ export default class MemoOperation {
 
   async delete() {
     const allMemos = await this.#db.all();
-    const choices = allMemos.map((memo) => {
-      const firstLine = memo.content.split("\n")[0];
-      return {
-        name: firstLine,
-        value: memo.id,
-      };
-    });
+    const choices = this.#createChoices(allMemos);
 
     const prompt = new enquirer.Select({
       message: "Choose a memo you want to delete:",
