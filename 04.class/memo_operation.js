@@ -43,7 +43,7 @@ export default class MemoOperation {
 
   async delete() {
     const allMemos = await this.#db.all();
-    const choices = await allMemos.map((memo) => {
+    const choices = allMemos.map((memo) => {
       const firstLine = memo.content.split("\n")[0];
       return {
         name: firstLine,
