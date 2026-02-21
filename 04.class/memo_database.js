@@ -12,11 +12,11 @@ export default class MemoDatabase {
   }
 
   addMemo(input) {
-    this.run("INSERT INTO memos (content) VALUES (?)", [input]);
+    return this.run("INSERT INTO memos (content) VALUES (?)", [input]);
   }
 
   deleteMemo(selectedId) {
-    this.db.run("DELETE FROM memos WHERE id = ?", [selectedId]);
+    return this.run("DELETE FROM memos WHERE id = ?", [selectedId]);
   }
 
   run(sql, params) {
