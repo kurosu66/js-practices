@@ -17,6 +17,21 @@ export default class MemoOperation {
     });
   }
 
+  async #chooseMemo(message) {
+    const allMemos = await this.#db.all();
+    const choices = this.#createChoices(allMemos);
+    const prompt = new enquirer.Select({
+      message,
+      choices,
+      result(name) {
+        const choice = this.choices.find((choice) => choice.name === name);
+        return choice.value;
+      },
+    });
+    const selectedId = await prompt.run();
+    return allMemos.find((memo) => memo.id === selectedId);
+  }
+
   async add(input) {
     await this.#db.addMemo(input);
   }
@@ -29,36 +44,16 @@ export default class MemoOperation {
   }
 
   async show() {
-    const allMemos = await this.#db.all();
-    const choices = this.#createChoices(allMemos);
-    const prompt = new enquirer.Select({
-      message: "Choose a memo you want to see:",
-      choices,
-      result(name) {
-        const choice = this.choices.find((choice) => choice.name === name);
-        return choice.value;
-      },
-    });
-
-    const selectedId = await prompt.run();
-    const selectedMemo = allMemos.find((memo) => memo.id === selectedId);
+    const selectedMemo = await this.#chooseMemo(
+      "Choose a memo you want to see:",
+    );
     console.log(selectedMemo.content);
   }
 
   async delete() {
-    const allMemos = await this.#db.all();
-    const choices = this.#createChoices(allMemos);
-
-    const prompt = new enquirer.Select({
-      message: "Choose a memo you want to delete:",
-      choices,
-      result(name) {
-        const choice = this.choices.find((choice) => choice.name === name);
-        return choice.value;
-      },
-    });
-
-    const selectedId = await prompt.run();
-    await this.#db.deleteMemo(selectedId);
+    const selectedMemo = await this.#chooseMemo(
+      "Choose a memo you want to delete:",
+    );
+    await this.#db.deleteMemo(selectedMemo.id);
   }
 }
