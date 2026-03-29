@@ -24,7 +24,7 @@ async function main() {
   const args = minimist(process.argv.slice(2));
   await db.initializeDatabase();
 
-  const memoOperator = new MemoOperation(db);
+  const memoOperation = new MemoOperation(db);
   const hasNoArguments = process.argv.length <= 2;
   const invalidArgument = !(args.l || args.r || args.d || hasNoArguments);
 
@@ -34,14 +34,14 @@ async function main() {
       process.exitCode = 1;
       return;
     } else if (args.l) {
-      await memoOperator.list();
+      await memoOperation.list();
     } else if (args.r) {
-      await memoOperator.show();
+      await memoOperation.show();
     } else if (args.d) {
-      await memoOperator.delete();
+      await memoOperation.delete();
     } else {
       const input = await readInput();
-      await memoOperator.add(input);
+      await memoOperation.add(input);
     }
   } catch (error) {
     // enquirerのユーザー側のキャンセル（Ctrl+C）を想定
