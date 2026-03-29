@@ -25,8 +25,8 @@ async function main() {
   await db.initializeDatabase();
 
   const memoOperation = new MemoOperation(db);
-  const hasNoArguments = process.argv.length <= 2;
-  const invalidArgument = !(args.l || args.r || args.d || hasNoArguments);
+  const isNoArguments = process.argv.length <= 2;
+  const invalidArgument = !(args.l || args.r || args.d || isNoArguments);
 
   try {
     if (invalidArgument) {
