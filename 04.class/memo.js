@@ -26,10 +26,10 @@ async function main() {
 
   const memoOperation = new MemoOperation(db);
   const isNoArguments = process.argv.length <= 2;
-  const invalidArgument = !(args.l || args.r || args.d || isNoArguments);
+  const isInvalidArgument = !(args.l || args.r || args.d || isNoArguments);
 
   try {
-    if (invalidArgument) {
+    if (isInvalidArgument) {
       console.error("Please specify a valid option.");
       process.exitCode = 1;
       return;
