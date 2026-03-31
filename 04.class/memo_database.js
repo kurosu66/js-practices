@@ -1,3 +1,4 @@
+import { resolve } from "dns";
 import sqlite3 from "sqlite3";
 
 export default class MemoDatabase {
@@ -19,6 +20,10 @@ export default class MemoDatabase {
     return this.run("DELETE FROM memos WHERE id = ?", [selectedId]);
   }
 
+  findAll() {
+    return this.all("SELECT * FROM memos ORDER BY id ASC");
+  }
+
   run(sql, params) {
     return new Promise((resolve, reject) => {
       this.db.run(sql, params, function (err) {
@@ -31,13 +36,13 @@ export default class MemoDatabase {
     });
   }
 
-  all() {
+  all(sql, params = []) {
     return new Promise((resolve, reject) => {
-      this.db.all("SELECT * FROM memos ORDER BY id ASC", (err, memos) => {
+      this.db.all(sql, params, (err, rows) => {
         if (err) {
           reject(err);
         } else {
-          resolve(memos);
+          resolve(rows);
         }
       });
     });

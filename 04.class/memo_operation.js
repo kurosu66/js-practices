@@ -18,7 +18,7 @@ export default class MemoOperation {
   }
 
   async #chooseMemo(message) {
-    const allMemos = await this.#db.all();
+    const allMemos = await this.#db.findAll();
     const choices = this.#createChoices(allMemos);
     const prompt = new enquirer.Select({
       message,
@@ -37,7 +37,7 @@ export default class MemoOperation {
   }
 
   async list() {
-    const allMemos = await this.#db.all();
+    const allMemos = await this.#db.findAll();
     allMemos.forEach((memo) => {
       console.log(memo.content.split("\n")[0]);
     });
