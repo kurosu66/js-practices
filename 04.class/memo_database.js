@@ -7,24 +7,24 @@ export default class MemoDatabase {
   }
 
   async initializeDatabase() {
-    return this.run(
+    return this.#run(
       "CREATE TABLE IF NOT EXISTS memos (id INTEGER PRIMARY KEY, content TEXT NOT NULL)",
     );
   }
 
   addMemo(input) {
-    return this.run("INSERT INTO memos (content) VALUES (?)", [input]);
+    return this.#run("INSERT INTO memos (content) VALUES (?)", [input]);
   }
 
   deleteMemo(selectedId) {
-    return this.run("DELETE FROM memos WHERE id = ?", [selectedId]);
+    return this.#run("DELETE FROM memos WHERE id = ?", [selectedId]);
   }
 
   findAll() {
-    return this.all("SELECT * FROM memos ORDER BY id ASC");
+    return this.#all("SELECT * FROM memos ORDER BY id ASC");
   }
 
-  run(sql, params) {
+  #run(sql, params) {
     return new Promise((resolve, reject) => {
       this.db.run(sql, params, function (err) {
         if (err) {
@@ -36,7 +36,7 @@ export default class MemoDatabase {
     });
   }
 
-  all(sql, params = []) {
+  #all(sql, params = []) {
     return new Promise((resolve, reject) => {
       this.db.all(sql, params, (err, rows) => {
         if (err) {
