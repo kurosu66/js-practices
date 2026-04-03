@@ -16,8 +16,8 @@ export default class MemoDatabase {
     return this.#run("INSERT INTO memos (content) VALUES (?)", [input]);
   }
 
-  deleteMemo(selectedId) {
-    return this.#run("DELETE FROM memos WHERE id = ?", [selectedId]);
+  deleteMemo(memoId) {
+    return this.#run("DELETE FROM memos WHERE id = ?", [memoId]);
   }
 
   findAll() {
