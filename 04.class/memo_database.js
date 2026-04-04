@@ -12,8 +12,8 @@ export default class MemoDatabase {
     );
   }
 
-  addMemo(input) {
-    return this.#run("INSERT INTO memos (content) VALUES (?)", [input]);
+  addMemo(content) {
+    return this.#run("INSERT INTO memos (content) VALUES (?)", [content]);
   }
 
   deleteMemo(memoId) {
