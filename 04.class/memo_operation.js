@@ -7,6 +7,32 @@ export default class MemoOperation {
     this.#db = db;
   }
 
+  async add(input) {
+    await this.#db.addMemo(input);
+  }
+
+  async list() {
+    const allMemos = await this.#db.findAll();
+    allMemos.forEach((memo) => {
+      console.log(memo.content.split("\n")[0]);
+    });
+  }
+
+  async show() {
+    const selectedMemo = await this.#chooseMemo(
+      "Choose a memo you want to see:",
+    );
+    console.log(selectedMemo.content);
+  }
+
+  async delete() {
+    const selectedMemo = await this.#chooseMemo(
+      "Choose a memo you want to delete:",
+    );
+    await this.#db.deleteMemo(selectedMemo.id);
+  }
+
+
   #createChoices(memos) {
     return memos.map((memo) => {
       const firstLine = memo.content.split("\n")[0];
@@ -32,28 +58,4 @@ export default class MemoOperation {
     return allMemos.find((memo) => memo.id === selectedId);
   }
 
-  async add(input) {
-    await this.#db.addMemo(input);
-  }
-
-  async list() {
-    const allMemos = await this.#db.findAll();
-    allMemos.forEach((memo) => {
-      console.log(memo.content.split("\n")[0]);
-    });
-  }
-
-  async show() {
-    const selectedMemo = await this.#chooseMemo(
-      "Choose a memo you want to see:",
-    );
-    console.log(selectedMemo.content);
-  }
-
-  async delete() {
-    const selectedMemo = await this.#chooseMemo(
-      "Choose a memo you want to delete:",
-    );
-    await this.#db.deleteMemo(selectedMemo.id);
-  }
 }
