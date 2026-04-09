@@ -49,13 +49,11 @@ export default class MemoOperation {
     const prompt = new enquirer.Select({
       message,
       choices,
-      result(name) {
-        const choice = this.choices.find((choice) => choice.name === name);
-        return choice.value;
+      result() {
+        return this.focused.value;
       },
     });
     const selectedId = await prompt.run();
     return allMemos.find((memo) => memo.id === selectedId);
   }
-
 }
