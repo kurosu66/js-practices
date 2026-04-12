@@ -22,6 +22,7 @@ export default class MemoOperation {
     const selectedMemo = await this.#chooseMemo(
       "Choose a memo you want to see:",
     );
+    if (!selectedMemo) return;
     console.log(selectedMemo.content);
   }
 
@@ -29,6 +30,7 @@ export default class MemoOperation {
     const selectedMemo = await this.#chooseMemo(
       "Choose a memo you want to delete:",
     );
+    if (!selectedMemo) return;
     await this.#db.deleteMemo(selectedMemo.id);
   }
 
@@ -45,6 +47,11 @@ export default class MemoOperation {
 
   async #chooseMemo(message) {
     const allMemos = await this.#db.findAll();
+    console.log(allMemos);
+    if (allMemos.length === 0) {
+      console.log("No memos found.");
+      return null;
+    }
     const choices = this.#createChoices(allMemos);
     const prompt = new enquirer.Select({
       message,
