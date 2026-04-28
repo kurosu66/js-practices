@@ -20,11 +20,11 @@ function readInput() {
 }
 
 async function main() {
-  const db = new MemoDatabase("./memo.db");
+  const memoDb = new MemoDatabase("./memo.db");
   const args = minimist(process.argv.slice(2));
-  await db.initializeDatabase();
+  await memoDb.initializeDatabase();
 
-  const memoOperation = new MemoOperation(db);
+  const memoOperation = new MemoOperation(memoDb);
   const isNoArguments = process.argv.length <= 2;
   const isInvalidArgument = !(args.l || args.r || args.d || isNoArguments);
 
