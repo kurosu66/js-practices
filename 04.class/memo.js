@@ -24,8 +24,8 @@ async function main() {
   await memoDb.initializeDatabase();
 
   const memoOperation = new MemoOperation(memoDb);
-  const isNoArguments = process.argv.length <= 2;
   const args = minimist(process.argv.slice(2));
+  const isNoArguments = Object.keys(args).length === 1;
   const isInvalidArgument = !(args.l || args.r || args.d || isNoArguments);
 
   try {
