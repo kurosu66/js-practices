@@ -47,7 +47,6 @@ export default class MemoOperation {
 
   async #chooseMemo(message) {
     const allMemos = await this.#db.findAll();
-    console.log(allMemos);
     if (allMemos.length === 0) {
       console.log("No memos found.");
       return null;
