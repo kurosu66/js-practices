@@ -28,12 +28,14 @@ async function main() {
   const isNoArguments = Object.keys(args).length === 1;
   const isInvalidArgument = !(args.l || args.r || args.d || isNoArguments);
 
+  if (isInvalidArgument) {
+  console.error("Please specify a valid option.");
+  process.exitCode = 1;
+  return;
+  }
+  
   try {
-    if (isInvalidArgument) {
-      console.error("Please specify a valid option.");
-      process.exitCode = 1;
-      return;
-    } else if (args.l) {
+    if (args.l) {
       await memoOperation.list();
     } else if (args.r) {
       await memoOperation.show();
