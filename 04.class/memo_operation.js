@@ -40,7 +40,7 @@ export default class MemoOperation {
       const firstLine = memo.content.split("\n")[0];
       return {
         name: firstLine,
-        value: memo.id,
+        value: memo,
       };
     });
   }
@@ -59,7 +59,6 @@ export default class MemoOperation {
         return this.focused.value;
       },
     });
-    const selectedId = await prompt.run();
-    return allMemos.find((memo) => memo.id === selectedId);
+    return await prompt.run();
   }
 }
