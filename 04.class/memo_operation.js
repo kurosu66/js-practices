@@ -8,7 +8,7 @@ export default class MemoOperation {
   }
 
   async add(input) {
-    await this.#db.addMemo(input);
+    await this.#db.add(input);
   }
 
   async list() {
@@ -31,7 +31,7 @@ export default class MemoOperation {
       "Choose a memo you want to delete:",
     );
     if (!selectedMemo) return;
-    await this.#db.deleteMemo(selectedMemo.id);
+    await this.#db.delete(selectedMemo.id);
   }
 
 

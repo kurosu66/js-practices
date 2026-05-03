@@ -13,11 +13,11 @@ export default class MemoDatabase {
     );
   }
 
-  addMemo(content) {
+  add(content) {
     return this.#run("INSERT INTO memos (content) VALUES (?)", [content]);
   }
 
-  deleteMemo(memoId) {
+  delete(memoId) {
     return this.#run("DELETE FROM memos WHERE id = ?", [memoId]);
   }
 
