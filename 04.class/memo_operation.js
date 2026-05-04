@@ -58,6 +58,6 @@ export default class MemoOperation {
         return this.focused.value;
       },
     });
-    return await prompt.run();
+    return prompt.run();
   }
 }

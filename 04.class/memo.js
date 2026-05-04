@@ -29,9 +29,9 @@ async function main() {
   const isInvalidArgument = !(args.l || args.r || args.d || isNoArguments);
 
   if (isInvalidArgument) {
-  console.error("Please specify a valid option.");
-  process.exitCode = 1;
-  return;
+    console.error("Please specify a valid option.");
+    process.exitCode = 1;
+    return;
   }
   
   try {
