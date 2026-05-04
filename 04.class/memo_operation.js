@@ -34,7 +34,6 @@ export default class MemoOperation {
     await this.#db.delete(selectedMemo.id);
   }
 
-
   #createChoices(memos) {
     return memos.map((memo) => {
       const firstLine = memo.content.split("\n")[0];
